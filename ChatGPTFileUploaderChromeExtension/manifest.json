@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "File Upload Plugin",
+  "version": "1.0",
+  "description": "Plugin to upload and submit file contents to the ChatGPT service using the textarea",
+  "content_scripts": [
+    {
+      "matches": ["https://chat.openai.com/*"],
+      "js": ["plugin.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "permissions": ["activeTab"]
+}
