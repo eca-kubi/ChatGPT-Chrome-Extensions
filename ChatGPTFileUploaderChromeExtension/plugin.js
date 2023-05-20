@@ -17,6 +17,17 @@
             }
         });
     }
+
+    // Add event listener to `New chat` button
+    // XPath selector for the 'New chat' button
+    let xpath = "//a[contains(text(), 'New chat')]";
+    let newChatButton = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+    if (newChatButton) {
+        newChatButton.addEventListener('click', function () {
+            // Timeout is used to ensure that the new chat UI is loaded before we attempt to add our plugin UI.
+            setTimeout(loadPlugin, 1000);
+        });
+    }
 })();
 
 async function submitConversation(text, part, filename) {
