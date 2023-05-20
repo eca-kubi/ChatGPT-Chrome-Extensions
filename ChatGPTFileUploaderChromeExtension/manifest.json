@@ -7,7 +7,7 @@
     {
       "matches": ["https://chat.openai.com/*"],
       "js": ["plugin.js"],
-      "run_at": "document_end"
+      "run_at": "document_idle"
     }
   ],
   "permissions": ["activeTab"]

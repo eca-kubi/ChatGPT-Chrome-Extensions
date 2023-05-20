@@ -1,4 +1,47 @@
 (function() {
+    loadPlugin();
+    // Add event listener to `nav>a` element
+    let navLink = document.querySelector('nav > a');
+    if (navLink) {
+        navLink.addEventListener('click', function () {
+            loadPlugin()
+        });
+    }
+
+    // Add event listener to nav ol for late binding with `nav ol>li>a` elements
+    let navList = document.querySelector('nav ol');
+    if (navList) {
+        navList.addEventListener('click', function(e) {
+            if (e.target && e.target.matches('li > a')) {
+                loadPlugin();
+            }
+        });
+    }
+})();
+
+async function submitConversation(text, part, filename) {
+    const textarea = document.querySelector("textarea[tabindex='0']");
+    const enterKeyEvent = new KeyboardEvent("keydown", {
+        bubbles: true,
+        cancelable: true,
+        keyCode: 13,
+    });
+
+    textarea.value = `Part ${part} of ${filename}: \n\n ${text}`;
+    textarea.dispatchEvent(enterKeyEvent);
+}
+
+// Function to check if ChatGPT is ready. Update this as per your needs.
+async function checkIfChatGptIsReady() {
+    let chatgptReady = false;
+    while (!chatgptReady) {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        // Check if ChatGPT is ready
+        // Update this condition according to your application
+        chatgptReady = !document.querySelector('.text-2xl > span:not(.invisible)');
+    }
+}
+function loadPlugin(){
     // Create the button and style it
     let submitButton = document.createElement('button');
     submitButton.textContent = 'Submit File';
@@ -55,27 +98,4 @@
 
         inputFile.click();
     });
-
-    async function submitConversation(text, part, filename) {
-        const textarea = document.querySelector("textarea[tabindex='0']");
-        const enterKeyEvent = new KeyboardEvent("keydown", {
-            bubbles: true,
-            cancelable: true,
-            keyCode: 13,
-        });
-
-        textarea.value = `Part ${part} of ${filename}: \n\n ${text}`;
-        textarea.dispatchEvent(enterKeyEvent);
-    }
-
-    // Function to check if ChatGPT is ready. Update this as per your needs.
-    async function checkIfChatGptIsReady() {
-        let chatgptReady = false;
-        while (!chatgptReady) {
-            await new Promise((resolve) => setTimeout(resolve, 1000));
-            // Check if ChatGPT is ready
-            // Update this condition according to your application
-            chatgptReady = !document.querySelector('.text-2xl > span:not(.invisible)');
-        }
-    }
-})();
+}
